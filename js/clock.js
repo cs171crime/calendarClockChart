@@ -18,8 +18,8 @@ Clockchart.prototype.initVis = function() {
     var vis = this;
 
     // SVG drawing area
-    vis.height = 1000;
-    vis.width = 1000;
+    vis.height = 500;
+    vis.width = 500;
     vis.radius = 200;
     vis.p = Math.PI * 2;
 
@@ -27,9 +27,6 @@ Clockchart.prototype.initVis = function() {
         .append("svg")
         .attr("height", vis.height)
         .attr("width", vis.width);
-
-    vis.color = d3.scaleLinear()
-        .range(["white", "red"]);
 
 
     vis.g = vis.svg.append("g")
@@ -45,7 +42,6 @@ Clockchart.prototype.initVis = function() {
     vis.clock = d3.pie()
         .sort(null)
         .value(function(d) {
-            //return d.value
             return d.angle;
         });
 
@@ -67,9 +63,19 @@ Clockchart.prototype.initVis = function() {
 Clockchart.prototype.wrangleData = function() {
     var vis = this;
 
-    // Update color domain
+    // Update color scale
     vis.maxForColorScale = d3.max(vis.data, function(d) { return d[vis.measure]; });
-    vis.color.domain([0, vis.maxForColorScale]);
+
+    console.log(vis.maxForColorScale);
+
+    vis.color = d3.scaleLinear()
+        .domain([0, vis.maxForColorScale]);
+    if (vis.measure == "HeroinCrimes") {
+        vis.color.range(["white","red"]);
+    }
+    else if (vis.measure == "WeedCrimes") {
+        vis.color.range(["white","green"]);
+    }
 
     // call updateVis
     vis.updateVis();

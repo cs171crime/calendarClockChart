@@ -10,6 +10,7 @@ var clockChartAfternoon;
 
 d3.csv("data/NewUpdatedData/DrugsByhour.csv", function(data) {
 
+    // Data processing
     data.forEach(function(d) {
         d.hourofday = +d.hourofday;
         d.HeroinCrimes = +d.HeroinCrimes;
@@ -17,6 +18,7 @@ d3.csv("data/NewUpdatedData/DrugsByhour.csv", function(data) {
         d.angle = +d.angle;
     });
 
+    // Put data in right form
     var morning = [];
     var afternoon = [];
 
@@ -25,8 +27,30 @@ d3.csv("data/NewUpdatedData/DrugsByhour.csv", function(data) {
         else { afternoon.push(data[i]) }
     }
 
-    clockChartMorning = new Clockchart("#clock-chart-morning", morning);
+    // Sanity check
+    console.log("morning");
+    console.log(morning);
+    console.log("afternoon");
+    console.log(afternoon);
 
+    // instantiate charts
+    clockChartMorning = new Clockchart("#clock-chart-morning", morning);
     clockChartAfternoon = new Clockchart("#clock-chart-afternoon", afternoon)
 
+    // update charts
+    d3.select("#var").on("change", updateVisualization);
+
 });
+
+function updateVisualization() {
+
+    // Grab user input and save it to measure attribute
+    clockChartMorning.measure = d3.select("#var").property("value");
+    clockChartAfternoon.measure = d3.select("#var").property("value");
+
+    // update visual
+    clockChartMorning.wrangleData();
+    clockChartAfternoon.wrangleData();
+
+
+};
