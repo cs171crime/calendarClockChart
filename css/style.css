@@ -3,5 +3,22 @@
 }
 
 .arc {
-    stroke:rgba(0,0,0,0.1);
+    stroke:rgba(0,0,0,0.05);
+}
+
+.hour-hand {
+    stroke-width: 6px;
+    stroke: black;
+}
+
+.minute-hand {
+    stroke-width: 3px;
+    stroke: black;
+}
+
+.hour-label {
+    font-size: 20px;
+    font-weight: bold;
+    fill: white;
+    stroke: black;
 }
