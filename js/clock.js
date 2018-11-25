@@ -10,6 +10,26 @@ Clockchart = function(_parentElement, _data) {
     this.data = _data;
     this.measure = "HeroinCrimes";
 
+    // set up the clock look
+    this.tickLength = 10;
+
+     this.getCoordFromCircle = function(deg, cx, cy, r) {
+         var rad = degToRad(deg);
+         var x = cx + r * Math.cos(rad);
+         var y = cy + r * Math.sin(rad);
+         return [x, y];
+     };
+     this.splitDegrees = function(num) {
+        var angle = circleDegree / num;
+        var degrees = [];
+
+        for (var ang = 0; ang < circleDegree; ang += angle) {
+            degrees.push(ang);
+        }
+
+        return degrees;
+    };
+
     this.initVis();
 };
 
@@ -50,7 +70,6 @@ Clockchart.prototype.initVis = function() {
         .enter()
         .append("g")
         .attr("class", "arc")
-        .style('stroke','white')
 
 
 
@@ -90,13 +109,42 @@ Clockchart.prototype.updateVis = function() {
         .style("fill", function(d) {
             return vis.color(d.data.HeroinCrimes);
         });
+
+    vis.g.append('g')
+        .attr('class', 'ticks')
+        .selectAll('path')
+        .data(splitDegrees(12))
+        .enter()
+        .append('path')
+        .attr('d', function(d) {
+            var coord = {
+                outer: getCoordFromCircle(d, 0, 0, vis.radius),
+                inner: getCoordFromCircle(d, 0, 0, vis.radius - vis.tickLength)
+            };
+            return 'M' + coord.outer[0] + ' ' + coord.outer[1] + 'L' + coord.inner[0] + ' ' + coord.inner[1] + 'Z';
+        })
+        .attr('stroke', 'black');
 };
 
 
+// trial
+function getCoordFromCircle(deg, cx, cy, r) {
+    var rad = degToRad(deg);
+    var x = cx + r * Math.cos(rad);
+    var y = cy + r * Math.sin(rad);
+    return [x, y];
+}
 
+function splitDegrees(num) {
+    var angle = circleDegree / num;
+    var degrees = [];
 
+    for (var ang = 0; ang < circleDegree; ang += angle) {
+        degrees.push(ang);
+    }
 
-
+    return degrees;
+}
 
 
 
