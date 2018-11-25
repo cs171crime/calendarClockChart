@@ -4,6 +4,27 @@
 var clockChartMorning;
 var clockChartAfternoon;
 
+var treemaps = []
+
+var weekdays = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday"
+]
+
+d3.csv('data/crime_calendar.csv', function(error, data) {
+    if (error) throw error;
+
+    weekdays.forEach(function(day) {
+        treemaps.push(new Treemap(day, data))
+    })
+});
+
+
 d3.csv("data/NewUpdatedData/DrugsByhour.csv", function(data) {
 
     // Data processing
@@ -38,11 +59,11 @@ d3.csv("data/NewUpdatedData/DrugsByhour.csv", function(data) {
 
 });
 
-function updateVisualization() {
+function updateVisualization(category) {
 
     // Grab user input and save it to measure attribute
-    clockChartMorning.measure = d3.select("#var").property("value");
-    clockChartAfternoon.measure = d3.select("#var").property("value");
+    clockChartMorning.measure = category;
+    clockChartAfternoon.measure = category;
 
     // update visual
     clockChartMorning.wrangleData();

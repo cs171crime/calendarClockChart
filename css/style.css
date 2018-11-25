@@ -22,3 +22,22 @@
     fill: white;
     stroke: black;
 }
+
+rect {
+    stroke: white;
+    stroke-width: 2px;
+}
+
+rect:hover {
+    cursor: pointer;
+    fill: #cccccc;
+}
+
+td {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.weekday-label {
+    font-weight: bold;
+}

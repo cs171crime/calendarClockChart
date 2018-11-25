@@ -25,7 +25,7 @@ Clockchart.prototype.initVis = function() {
 
     // SVG drawing area
     vis.height = 500;
-    vis.width = 500;
+    vis.width = 400;
     vis.radius = 200;
     vis.p = Math.PI * 2;
 
