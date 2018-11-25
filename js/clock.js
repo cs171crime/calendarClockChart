@@ -85,6 +85,9 @@ Clockchart.prototype.wrangleData = function() {
     else if (vis.measure === "WeedCrimes") {
         vis.color.range(["white","#31a354"]);
     }
+    else if (vis.measure === "NumNeedles") {
+        vis.color.range(["white","orange"]);
+    }
 
     // call updateVis
     vis.updateVis();
